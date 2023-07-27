@@ -1,27 +1,99 @@
 import styled from "styled-components";
 import Logo from "../../assets/Logo.png";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import axios from "axios";
 
-export default function HomePage() {
+export default function REgistrationPage() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [url, setUrl] = useState("");
+    const [able, setAble] = useState("");
+    const navigate = useNavigate();
+
+    function signUp(e) {
+        e.preventDefault();
+
+        console.log(email);
+        console.log(password);
+        console.log(name);
+        console.log(url);
+
+        const newUser = {
+            email: email,
+            name: name,
+            image: url,
+            password: password
+        }
+
+        console.log(newUser);
+
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', newUser)
+
+        setAble('disabled')
+
+            promise.then(resp => navigate('/'))
+            promise.catch(erro => {
+                alert(erro.response.data.message) 
+                setAble('')
+            })
+
+    }
+
+
     return (
         <HomeContainer>
             <ImageContainer>
                 <img src={Logo} alt="" />
             </ImageContainer>
 
-            <LoginInformation>
-                <input placeholder="email" />
-                <input placeholder="senha" />
-                <input placeholder="nome" />
-                <input placeholder="foto" />
-                <button>Cadastrar</button>
+            <LoginInformation onSubmit={signUp}>
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="email"
+                    required
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    able={able}
+                />
+                <input
+                    id="senha"
+                    type="password"
+                    placeholder="senha"
+                    required
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    able={able}
+                />
+                <input
+                    id="nome"
+                    type="text"
+                    placeholder="nome"
+                    required
+                    onChange={e => setName(e.target.value)}
+                    value={name}
+                    able={able}
+                />
+                <input
+                    id="foto"
+                    type="url"
+                    placeholder="foto"
+                    required
+                    onChange={e => setUrl(e.target.value)}
+                    value={url}
+                    able={able}
+                />
+                <button type="submit">Cadastrar</button>
             </LoginInformation>
 
-                <Link to={'/'}>
+            <Link to={'/'}>
                 <ParaCadastrar>
-                Já possui uma conta? Faça login
+                    Já possui uma conta? Faça login
                 </ParaCadastrar>
-                </Link>
+            </Link>
 
         </HomeContainer>
     );
@@ -45,7 +117,7 @@ const ImageContainer = styled.div`
     }
 `
 
-const LoginInformation = styled.div`
+const LoginInformation = styled.form`
     display: flex;
     align-items: center;
     flex-direction: column;

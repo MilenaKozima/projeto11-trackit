@@ -5,7 +5,6 @@ import Elipse from '../../assets/Ellipse 2.png'
 export default function HabitsPage() {
     return (
         <HabitsContainer>
-
             <Topo>
                 <p>Trackit</p>
                 <img src={Bob} alt="" />
