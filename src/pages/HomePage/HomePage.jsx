@@ -1,28 +1,79 @@
 import styled from "styled-components";
 import Logo from "../../assets/Logo.png";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import axios from "axios";
+//import Loader from "react-loader-spinner";
 
 export default function HomePage() {
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [able, setAble] = useState("");
+    const navigate = useNavigate();
 
-    
+
+    function login(e) {
+
+        e.preventDefault();
+
+        const user = {
+            email: email,
+            password: password
+        }
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", user);
+        setAble('disabled')
+        promise.then(resp => navigate('/hoje'))
+        promise.catch(erro => {
+            alert(erro.response.data.message)
+            setAble('')
+        })
+
+    }
+
     return (
         <HomeContainer>
             <ImageContainer>
                 <img src={Logo} alt="" />
             </ImageContainer>
 
-            <LoginInformation>
-                <input placeholder="email" />
-                <input placeholder="senha" />
-                <button>Entrar</button>
+            <LoginInformation onSubmit={login} able={able}>
+                <input
+                    placeholder="email"
+                    data-test="email-input"
+                    id="email"
+                    required
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    able={able}
+                />
+                <input
+                    placeholder="senha"
+                    test="password-input"
+                    id="password"
+                    required
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    able={able}
+                />
+                <button data-test="login-btn" type="submit" able={able}>Entrar</button>
+                {/* <button type="submit" able={able}>
+                    {able === "disabled" ? ( // Conditionally render the Loader component
+                        <LoaderContainer>
+                            <Loader type="ThreeDots" color="#FFF" height={30} width={30} />
+                        </LoaderContainer>
+                    ) : (
+                        "Entrar"
+                    )}
+                </button> */}
             </LoginInformation>
 
-                <Link to={'/cadastro'}>
-                <ParaCadastrar>
-                Não tem uma conta ? Cadastre-se
+            <Link to={'/cadastro'}>
+                <ParaCadastrar data-test="signup-link">
+                    Não tem uma conta ? Cadastre-se
                 </ParaCadastrar>
-                </Link>
+            </Link>
 
         </HomeContainer>
     );
@@ -46,7 +97,7 @@ const ImageContainer = styled.div`
     }
 `
 
-const LoginInformation = styled.div`
+const LoginInformation = styled.form`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -59,6 +110,8 @@ const LoginInformation = styled.div`
         margin-top: 6px;
         box-shadow: none;
         font-size: 21px;
+        color: ${(props) => (props.able ? "#DBDBDB" : "#AFAFAF")};
+        background: ${(props) => (props.able ? "#FFFFFF" : "#F2F2F2")};
     }
     button{
         width: 303px;
@@ -69,7 +122,17 @@ const LoginInformation = styled.div`
         box-shadow: none;
         color: #FFFFFF;
         font-size: 21px;
+        border-color:#52B6FF;
+        position: relative; /* Ensure the loader is positioned relative to the button */
+        overflow: hidden; /* Hide any overflow of the loader */
+        padding: 0 10px;
     }
+    input:focus {
+        border-color: ${(props) => (props.able ? "#FFFFFF" : "#F2F2F2")};
+        color: ${(props) => (props.able ? "#DBDBDB" : "#AFAFAF")};
+        background: ${(props) => (props.able ? "#FFFFFF" : "#F2F2F2")};
+        outline: none;
+  }
 `
 const ParaCadastrar = styled.div`
     display: flex;
@@ -80,3 +143,16 @@ const ParaCadastrar = styled.div`
     text-decoration: none;
     
 `
+
+const LoaderContainer = styled.div`
+  /* Style the container of the loader */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7); /* Add a semi-transparent background to the loader */
+`;

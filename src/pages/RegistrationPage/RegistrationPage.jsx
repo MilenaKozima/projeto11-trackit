@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 
-export default function REgistrationPage() {
+export default function RegistrationPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -52,6 +52,7 @@ export default function REgistrationPage() {
             <LoginInformation onSubmit={signUp}>
                 <input
                     id="email"
+                    data-test="email-input"
                     type="email"
                     placeholder="email"
                     required
@@ -61,6 +62,7 @@ export default function REgistrationPage() {
                 />
                 <input
                     id="senha"
+                    data-test="password-input"
                     type="password"
                     placeholder="senha"
                     required
@@ -70,6 +72,7 @@ export default function REgistrationPage() {
                 />
                 <input
                     id="nome"
+                    data-test="user-name-input"
                     type="text"
                     placeholder="nome"
                     required
@@ -79,6 +82,7 @@ export default function REgistrationPage() {
                 />
                 <input
                     id="foto"
+                    data-test="user-image-input"
                     type="url"
                     placeholder="foto"
                     required
@@ -86,11 +90,11 @@ export default function REgistrationPage() {
                     value={url}
                     able={able}
                 />
-                <button type="submit">Cadastrar</button>
+                <button  data-test="signup-btn" type="submit">Cadastrar</button>
             </LoginInformation>
 
             <Link to={'/'}>
-                <ParaCadastrar>
+                <ParaCadastrar data-test="login-link">
                     Já possui uma conta? Faça login
                 </ParaCadastrar>
             </Link>
