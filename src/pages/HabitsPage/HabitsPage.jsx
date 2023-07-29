@@ -30,12 +30,12 @@ export default function HabitsPage() {
     );
 }
 
-const HabitsContainer = styled.div`
-    background-color: #E5E5E5;
+ const HabitsContainer = styled.div`
+    background-color: #F2F2F2;
     position: relative;
 `
 
-const Topo = styled.div`
+ export const Topo = styled.div`
     height: 70px;
     width: 100%;
     display: flex;
@@ -65,7 +65,7 @@ const Topo = styled.div`
 
 const Meio = styled.div`
 
-    background-color: #E5E5E5;
+    
 `
 
 const MeioTopo = styled.div`
@@ -98,7 +98,7 @@ const MeioMeio = styled.div`
         color: #666666;
     }
 `
-const Baixo = styled.div`
+export const Baixo = styled.div`
     height: 70px;
     margin-top: 527px;
     background-color:#FFFFFF;

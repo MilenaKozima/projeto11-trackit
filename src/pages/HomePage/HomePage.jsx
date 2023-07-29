@@ -3,7 +3,7 @@ import Logo from "../../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
-//import Loader from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HomePage() {
 
@@ -50,23 +50,22 @@ export default function HomePage() {
                 />
                 <input
                     placeholder="senha"
-                    test="password-input"
+                    data-test="password-input"
                     id="password"
                     required
                     onChange={e => setPassword(e.target.value)}
                     value={password}
                     able={able}
                 />
-                <button data-test="login-btn" type="submit" able={able}>Entrar</button>
-                {/* <button type="submit" able={able}>
+                 <button type="submit" able={able}>
                     {able === "disabled" ? ( // Conditionally render the Loader component
                         <LoaderContainer>
-                            <Loader type="ThreeDots" color="#FFF" height={30} width={30} />
+                            <ThreeDots color="#FFF" height={30} width={30} />
                         </LoaderContainer>
                     ) : (
                         "Entrar"
                     )}
-                </button> */}
+                </button> 
             </LoginInformation>
 
             <Link to={'/cadastro'}>
@@ -144,7 +143,7 @@ const ParaCadastrar = styled.div`
     
 `
 
-const LoaderContainer = styled.div`
+export const LoaderContainer = styled.div`
   /* Style the container of the loader */
   position: absolute;
   top: 0;
@@ -154,5 +153,5 @@ const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.7); /* Add a semi-transparent background to the loader */
+  background: rgba(255, 255, 255, 0.2); /* Add a semi-transparent background to the loader */
 `;

@@ -3,6 +3,8 @@ import Logo from "../../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+
 
 export default function RegistrationPage() {
 
@@ -58,7 +60,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setEmail(e.target.value)}
                     value={email}
-                    able={able}
+                    //able={able}
                 />
                 <input
                     id="senha"
@@ -68,7 +70,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    able={able}
+                    //able={able}
                 />
                 <input
                     id="nome"
@@ -78,7 +80,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setName(e.target.value)}
                     value={name}
-                    able={able}
+                   // able={able}
                 />
                 <input
                     id="foto"
@@ -88,9 +90,20 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setUrl(e.target.value)}
                     value={url}
-                    able={able}
+                   // able={able}
                 />
-                <button  data-test="signup-btn" type="submit">Cadastrar</button>
+                {/* <button  data-test="signup-btn" type="submit">Cadastrar</button> */}
+
+                <button type="submit" able={able}>
+                    {able === "disabled" ? ( // Conditionally render the Loader component
+                        <LoaderContainer>
+                            <ThreeDots color="#FFF" height={30} width={30} />
+                        </LoaderContainer>
+                    ) : (
+                        "Cadastrar"
+                    )}
+                </button> 
+
             </LoginInformation>
 
             <Link to={'/'}>
@@ -139,6 +152,7 @@ const LoginInformation = styled.form`
         width: 303px;
         height: 45px;
         background: #52B6FF;
+        border-color: #52B6FF;
         border-radius: 5px;
         margin-top: 6px;
         box-shadow: none;
@@ -155,3 +169,16 @@ const ParaCadastrar = styled.div`
     text-decoration: none;
     
 `
+
+const LoaderContainer = styled.div`
+  /* Style the container of the loader */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2); /* Add a semi-transparent background to the loader */
+`;
