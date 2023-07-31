@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { ProgressContext } from "../../contexts/ProgressContext";
+import { useState } from "react";
 
 export default function HabitsPage() {
 
     const { user } = useContext(UserContext);
-    const { progress } = useContext(ProgressContext)
+    const { progress } = useContext(ProgressContext);
+    const [novoHabito, setNovoHabito] = useState('');
+    const [able, setAble] = useState(false);
+    const weekDay = ["S","D","S","T","Q","Q","S"];
 
     return (
         <HabitsContainer>
@@ -22,11 +26,32 @@ export default function HabitsPage() {
             <Meio>
                 <MeioTopo>
                     <p>Meus Habitos</p>
-                    <button> + </button>
+                    <button data-test="habit-create-btn"> + </button>
                 </MeioTopo>
-                <MeioMeio>
+                <NaoPossuiHabitos>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                </MeioMeio>
+                </NaoPossuiHabitos>
+                <AdicionarHabitos data-test="habit-create-container">
+                <input
+                    id="novohabito"
+                    data-test="habit-name-input"
+                    type="text"
+                    placeholder="nome do hábito"
+                    required
+                    onChange={e => setNovoHabito(e.target.value)}
+                    value={novoHabito}
+                    disabled={able}
+                />
+                <div>
+                    {weekDay.map(weekDay =>(
+                        <button data-test="habit-day">
+                            {weekDay}
+                        </button>
+                    ))}
+                </div>
+                <button data-test="habit-create-cancel-btn">Cancelar</button>
+                <button data-test="habit-create-save-btn">Salvar</button>
+                </AdicionarHabitos>
             </Meio>
             <Baixo>
                 <Link to={'/habitos'}>
@@ -109,10 +134,13 @@ display: flex;
         margin-top: 22px;
         height: 35px;
         width: 40px;
+        background-color: #52B6FF;
+        border-radius: 5px;
+        border-color: #52B6FF;
     }
 `
 
-export const MeioMeio = styled.div`
+export const NaoPossuiHabitos = styled.div`
     p{
         font-family: 'Lexend Deca', sans-serif;
         font-family: 'Righteous', cursive;
@@ -153,4 +181,21 @@ export const Baixo = styled.div`
         width: 91px;
         height: 91px;
     }
+`
+const AdicionarHabitos = styled.form`
+    width: 340px;
+    height: 180px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    input{
+        width: 303px;
+        height: 45px;
+        border-radius: 5px;
+        border-color: #D4D4D4;
+        color: #D4D4D4;
+        margin-top: 20px;
+        margin-left: 18px;
+    }
+
 `
