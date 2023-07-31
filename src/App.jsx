@@ -8,17 +8,20 @@ import TodayPage from "./pages/TodayPage/TodayPage"
 import HistoryPage from "./pages/HistoryPage/HistoryPage"
 import { useState } from "react"
 import { UserContext } from "./contexts/UserContext"
+import { ProgressContext } from "./contexts/ProgressContext"
 
 
 
 function App() {
 
   const [user, setUser] = useState({});
+  const [progress, setprogress] = useState(0);
 
 
 
   return (
     <BrowserRouter>
+    <ProgressContext.Provider value={{progress, setprogress}}>
     <UserContext.Provider value={{user, setUser}}>
     <Routes>
       <Route path='/' element={<HomePage/>}/>
@@ -28,6 +31,7 @@ function App() {
       <Route path='/historico' element={<HistoryPage/>}/>
     </Routes>
     </UserContext.Provider>
+    </ProgressContext.Provider>
     </BrowserRouter>
   )
 }

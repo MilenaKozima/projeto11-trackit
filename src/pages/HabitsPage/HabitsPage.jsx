@@ -1,13 +1,23 @@
 import styled from "styled-components";
 import Bob from '../../assets/Rectangle 14.png';
 import Elipse from '../../assets/Ellipse 2.png'
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { Link } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { ProgressContext } from "../../contexts/ProgressContext";
 
 export default function HabitsPage() {
+
+    const { user } = useContext(UserContext);
+    const { progress } = useContext(ProgressContext)
+
     return (
         <HabitsContainer>
             <Topo>
                 <p>Trackit</p>
-                <img src={Bob} alt="" />
+                <img src={user.image} alt="imagem do perfil" />
             </Topo>
             <Meio>
                 <MeioTopo>
@@ -19,24 +29,39 @@ export default function HabitsPage() {
                 </MeioMeio>
             </Meio>
             <Baixo>
-                <p>Habitos</p>
-                <div className="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <p>Hoje</p>
-                </div>
-                <p>Historico</p>
+                <Link to={'/habitos'}>
+                    <p>Habitos</p>
+                </Link>
+                <Link to={'/hoje'}>
+                    <div>
+                        <CircularProgressbar
+                            value={progress}
+                            text={"Hoje"}
+                            background
+                            backgroundPadding={6}
+                            styles={buildStyles({
+                                backgroundColor: "#3E98C7",
+                                pathColor: "#fff",
+                                textColor: "#fff",
+                                trailColor: "transparent"
+                            })}
+                        />
+                    </div>
+                </Link>
+                <Link to={'/historico'}><p>Historico</p></Link>
             </Baixo>
 
         </HabitsContainer>
     );
 }
 
- export const HabitsContainer = styled.div`
+export const HabitsContainer = styled.div`
     background-color: #F2F2F2;
     position: relative;
     min-height: 100vh;
 `
 
- export const Topo = styled.div`
+export const Topo = styled.div`
     height: 70px;
     width: 100%;
     display: flex;
@@ -64,7 +89,7 @@ export default function HabitsPage() {
     }
 `
 
- export const Meio = styled.div`
+export const Meio = styled.div`
 
 
 `
@@ -113,17 +138,19 @@ export const Baixo = styled.div`
     p{
         font-family: 'Lexend Deca', sans-serif;
         font-family: 'Righteous', cursive;
+        text-decoration: none;
+        color:#52B6FF;
+        margin-left: 37px;
+        margin-right: 37px;
     }
-    .progress-bar {
+    h1{
+        font-family: 'Lexend Deca', sans-serif;
+        font-family: 'Righteous', cursive;
+        text-decoration: none;
+        color:#FFFFFF;
+    }
+    div{
         width: 91px;
         height: 91px;
-        margin-bottom: 50px;
-        border-radius: 50%;
-        background: 
-        radial-gradient(closest-side, #126BA5 79%, transparent 80% 100%),
-        conic-gradient(white 75%, #126BA5 0); 
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 `
