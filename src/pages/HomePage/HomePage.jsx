@@ -4,28 +4,37 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { useContext } from "react";
+import {UserContext} from "../../contexts/UserContext";
 
 export default function HomePage() {
 
+    const {user, setUser} = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [able, setAble] = useState("");
+    const [able, setAble] = useState(false);
     const navigate = useNavigate();
 
 
     function login(e) {
 
         e.preventDefault();
-
+        setAble(true)
         const user = {
             email: email,
             password: password
         }
 
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", user);
-        setAble('disabled')
-        promise.then(resp => navigate('/hoje'))
+        promise.then(resp => {
+            setAble(false)
+            navigate('/hoje')
+            const {id, name, image, token} = resp.data;
+            console.log(resp.data);
+            setUser({id, name, image, token});
+        })
         promise.catch(erro => {
+            setAble(false)
             alert(erro.response.data.message)
             setAble('')
         })
@@ -46,7 +55,7 @@ export default function HomePage() {
                     required
                     onChange={e => setEmail(e.target.value)}
                     value={email}
-                    able={able}
+                    disabled={able}
                 />
                 <input
                     placeholder="senha"
@@ -55,10 +64,10 @@ export default function HomePage() {
                     required
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    able={able}
+                    disabled={able}
                 />
-                 <button type="submit" able={able}>
-                    {able === "disabled" ? ( // Conditionally render the Loader component
+                 <button type="submit" disabled={able}>
+                    {able === true ? ( // Conditionally render the Loader component
                         <LoaderContainer>
                             <ThreeDots color="#FFF" height={30} width={30} />
                         </LoaderContainer>

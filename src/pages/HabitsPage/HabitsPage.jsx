@@ -30,9 +30,10 @@ export default function HabitsPage() {
     );
 }
 
- const HabitsContainer = styled.div`
+ export const HabitsContainer = styled.div`
     background-color: #F2F2F2;
     position: relative;
+    min-height: 100vh;
 `
 
  export const Topo = styled.div`
@@ -63,12 +64,12 @@ export default function HabitsPage() {
     }
 `
 
-const Meio = styled.div`
+ export const Meio = styled.div`
 
-    
+
 `
 
-const MeioTopo = styled.div`
+export const MeioTopo = styled.div`
 margin-top: 70px;
 display: flex;
     p{
@@ -86,7 +87,7 @@ display: flex;
     }
 `
 
-const MeioMeio = styled.div`
+export const MeioMeio = styled.div`
     p{
         font-family: 'Lexend Deca', sans-serif;
         font-family: 'Righteous', cursive;
@@ -105,6 +106,10 @@ export const Baixo = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: fixed;
+    bottom: 20px; /* Adjust this value to move the element up or down */
+    left: 50%; /* Horizontally center the element */
+    transform: translateX(-50%);
     p{
         font-family: 'Lexend Deca', sans-serif;
         font-family: 'Righteous', cursive;

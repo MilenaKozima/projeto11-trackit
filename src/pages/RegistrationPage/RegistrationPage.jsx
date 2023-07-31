@@ -12,12 +12,12 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
-    const [able, setAble] = useState("");
+    const [able, setAble] = useState(false);
     const navigate = useNavigate();
 
     function signUp(e) {
         e.preventDefault();
-
+        setAble(true)
         console.log(email);
         console.log(password);
         console.log(name);
@@ -34,12 +34,14 @@ export default function RegistrationPage() {
 
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', newUser)
 
-        setAble('disabled')
 
-            promise.then(resp => navigate('/'))
+            promise.then(resp => {
+                setAble(false)
+                navigate('/')
+            })
             promise.catch(erro => {
+                setAble(false)
                 alert(erro.response.data.message) 
-                setAble('')
             })
 
     }
@@ -60,7 +62,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setEmail(e.target.value)}
                     value={email}
-                    //able={able}
+                    disabled={able}
                 />
                 <input
                     id="senha"
@@ -70,7 +72,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    //able={able}
+                    disabled={able}
                 />
                 <input
                     id="nome"
@@ -80,7 +82,7 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setName(e.target.value)}
                     value={name}
-                   // able={able}
+                    disabled={able}
                 />
                 <input
                     id="foto"
@@ -90,12 +92,12 @@ export default function RegistrationPage() {
                     required
                     onChange={e => setUrl(e.target.value)}
                     value={url}
-                   // able={able}
+                    disabled={able}
                 />
-                {/* <button  data-test="signup-btn" type="submit">Cadastrar</button> */}
 
-                <button type="submit" able={able}>
-                    {able === "disabled" ? ( // Conditionally render the Loader component
+
+                <button type="submit" disabled={able}>
+                    {able ? ( // Conditionally render the Loader component
                         <LoaderContainer>
                             <ThreeDots color="#FFF" height={30} width={30} />
                         </LoaderContainer>
