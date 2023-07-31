@@ -19,9 +19,9 @@ export default function HabitsPage() {
 
     return (
         <HabitsContainer>
-            <Topo>
+            <Topo data-test="header">
                 <p>Trackit</p>
-                <img src={user.image} alt="imagem do perfil" />
+                <img data-test="avatar" src={user.image} alt="" />
             </Topo>
             <Meio>
                 <MeioTopo>
@@ -53,11 +53,11 @@ export default function HabitsPage() {
                 <button data-test="habit-create-save-btn">Salvar</button>
                 </AdicionarHabitos>
             </Meio>
-            <Baixo>
-                <Link to={'/habitos'}>
+            <Baixo data-test="menu">
+                <Link data-test="habit-link" to={'/habitos'}>
                     <p>Habitos</p>
                 </Link>
-                <Link to={'/hoje'}>
+                <Link data-test="today-link" to={'/hoje'}>
                     <div>
                         <CircularProgressbar
                             value={progress}
@@ -73,7 +73,7 @@ export default function HabitsPage() {
                         />
                     </div>
                 </Link>
-                <Link to={'/historico'}><p>Historico</p></Link>
+                <Link data-test="history-link" to={'/historico'}><p>Historico</p></Link>
             </Baixo>
 
         </HabitsContainer>

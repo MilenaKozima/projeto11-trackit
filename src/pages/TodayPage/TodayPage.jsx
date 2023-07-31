@@ -19,23 +19,23 @@ export default function TodayPage() {
 
     return (
         <HabitsContainer>
-            <Topo>
+            <Topo data-test="header">
                 <p>Trackit</p>
-                <img src={user.image} alt="" />
+                <img data-test="avatar" src={user.image} alt="" />
             </Topo>
 
             <Meio>
                 <MeioToday>
-                    <p>Segunda 17/05</p>
-                    <h1>Nenhum hábito concluido ainda</h1>
+                    <p data-test="today">Segunda 17/05</p>
+                    <h1 data-test="today-counter">Nenhum hábito concluido ainda</h1>
                 </MeioToday>
-                <MeioCheck>
+                <MeioCheck data-test="today-habit-container">
                     <div>                    
-                    <h1>Ler 1 capitulo de livro</h1>
-                    <p>Sequência atual: 3 dias</p>
-                    <h6>Seu recorde: 3 dias</h6>
+                    <h1 data-test="today-habit-name">Ler 1 capitulo de livro</h1>
+                    <p data-test="today-habit-sequence">Sequência atual: 3 dias</p>
+                    <h6 data-test="today-habit-record">Seu recorde: 3 dias</h6>
                     </div>
-                    <ion-icon name="checkbox"></ion-icon>
+                    <ion-icon data-test="today-habit-check-btn" name="checkbox"></ion-icon>
                 </MeioCheck>
                 <MeioCheck>
                     <div>                    
@@ -55,12 +55,12 @@ export default function TodayPage() {
                 </MeioCheck>
             </Meio>
 
-            <Baixo>
-                <Link to={'/habitos'}>
-                <p>Habitos</p>
+            <Baixo data-test="menu">
+                <Link data-test="habit-link" to={'/habitos'}>
+                    <p>Habitos</p>
                 </Link>
-                <Link to={'/hoje'}>
-                <div>
+                <Link data-test="today-link" to={'/hoje'}>
+                    <div>
                         <CircularProgressbar
                             value={progress}
                             text={"Hoje"}
@@ -75,7 +75,7 @@ export default function TodayPage() {
                         />
                     </div>
                 </Link>
-                <Link to={'/historico'}><p>Historico</p></Link>
+                <Link data-test="history-link" to={'/historico'}><p>Historico</p></Link>
             </Baixo>
 
         </HabitsContainer>
